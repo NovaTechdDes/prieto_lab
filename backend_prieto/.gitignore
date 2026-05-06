@@ -1,0 +1,9 @@
+node_modules/
+dist/
+.env
+
+distribucion/backend
+distribucion/instaladores
+distribucion/nssm.exe
+distribucion/output
+distribucion/uploads
