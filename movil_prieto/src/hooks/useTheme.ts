@@ -4,8 +4,6 @@ export const useTheme = () => {
   const colorScheme = useColorScheme();
   const isDark = colorScheme === "dark";
 
-  console.log(colorScheme);
-
   return {
     isDark,
     colors: {

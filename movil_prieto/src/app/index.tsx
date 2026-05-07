@@ -24,9 +24,12 @@ export default function Index() {
   };
 
   useEffect(() => {
-    if (!isLoading) {
-      const total = data?.reduce((acc, item) => acc + item.saldo, 0);
-      setTotalFiltrado(total || 0);
+    if (!isLoading && data) {
+      const total = data.reduce((acc, doc) => {
+        const docTotal = doc.paciente.reduce((pAcc, p) => pAcc + p.saldo, 0);
+        return acc + docTotal;
+      }, 0);
+      setTotalFiltrado(total);
     }
   }, [data, isLoading]);
 
@@ -60,7 +63,7 @@ export default function Index() {
             </Text>
           </View>
         }
-        keyExtractor={(item) => item.id_odontologo + item.paciente + item.saldo}
+        keyExtractor={(item) => item.id_odontologo.toString()}
         data={data}
         renderItem={({ item }) => <CuentaItem saldo={item} />}
       />

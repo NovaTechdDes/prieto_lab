@@ -3,6 +3,7 @@ import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { View } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import { useAutoUpdate } from "../hooks/useAutoUpdate";
 import { useTheme } from "../hooks/useTheme";
 
 const client = new QueryClient();
@@ -10,17 +11,23 @@ const client = new QueryClient();
 export default function RootLayout() {
   const { colors, isDark } = useTheme();
 
+  useAutoUpdate();
+
   return (
     <SafeAreaProvider style={{ flex: 1 }}>
       <QueryClientProvider client={client}>
         <View
-          style={{ flex: 1, alignItems: "stretch", backgroundColor: colors.background }}
+          style={{
+            flex: 1,
+            alignItems: "stretch",
+            backgroundColor: colors.background,
+          }}
         >
           <StatusBar style={isDark ? "light" : "dark"} />
           <Stack
             screenOptions={{
               headerShown: false,
-              contentStyle: { backgroundColor: colors.background }
+              contentStyle: { backgroundColor: colors.background },
             }}
           />
         </View>
