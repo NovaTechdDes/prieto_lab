@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { useTheme } from "../hooks/useTheme";
 
 interface Props {
   texto: string;
@@ -15,24 +16,32 @@ interface Props {
 }
 
 export default function Buscador({ texto, totalFiltrado, setTexto }: Props) {
+  const { colors } = useTheme();
   const [isFocused, setIsFocused] = useState(false);
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: colors.background }]}>
       <View
-        style={[styles.searchSection, isFocused && styles.searchSectionFocused]}
+        style={[
+          styles.searchSection,
+          {
+            backgroundColor: colors.card,
+            borderColor: colors.border,
+          },
+          isFocused && { borderColor: colors.accent },
+        ]}
       >
         <Ionicons
           name="search-outline"
           size={20}
-          color={isFocused ? "#0D9488" : "#94A3B8"}
+          color={isFocused ? colors.accent : colors.icon}
           style={styles.searchIcon}
         />
 
         <TextInput
-          style={styles.input}
+          style={[styles.input, { color: colors.text }]}
           placeholder="Buscar odontólogo..."
-          placeholderTextColor="#94A3B8"
+          placeholderTextColor={colors.placeholder}
           value={texto}
           onChangeText={setTexto}
           onFocus={() => setIsFocused(true)}
@@ -45,23 +54,24 @@ export default function Buscador({ texto, totalFiltrado, setTexto }: Props) {
             onPress={() => setTexto("")}
             style={styles.clearButton}
           >
-            <Ionicons name="close-circle" size={18} color="#CBD5E1" />
+            <Ionicons name="close-circle" size={18} color={colors.textMuted} />
           </TouchableOpacity>
         )}
       </View>
 
-      <View style={styles.totalContainer}>
+      <View style={[styles.totalContainer, { backgroundColor: colors.card, borderColor: colors.border }]}>
         <View style={styles.totalInfo}>
-          <View style={styles.totalIconContainer}>
-            <Ionicons name="calculator-outline" size={16} color="#64748B" />
+          <View style={[styles.totalIconContainer, { backgroundColor: colors.background, borderColor: colors.border }]}>
+            <Ionicons name="calculator-outline" size={16} color={colors.icon} />
           </View>
-          <Text style={styles.totalLabel}>Total Filtrado</Text>
+          <Text style={[styles.totalLabel, { color: colors.textMuted }]}>Total Filtrado</Text>
         </View>
 
         <Text
           style={[
             styles.totalValue,
-            totalFiltrado !== null && totalFiltrado < 0 && styles.totalValueNegative,
+            { color: "#0D9488" }, // Mantener teal para positivo por claridad clínica
+            totalFiltrado !== null && totalFiltrado < 0 && { color: "#E11D48" },
           ]}
         >
           $
@@ -77,30 +87,21 @@ export default function Buscador({ texto, totalFiltrado, setTexto }: Props) {
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 16,
-    paddingTop: 20,
+    paddingTop: 50, // Aumentado para SafeArea
     paddingBottom: 10,
   },
   searchSection: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "#FFFFFF",
     borderRadius: 12,
     borderWidth: 1,
-    borderColor: "#E2E8F0",
     paddingHorizontal: 12,
     height: 48,
-    // Sombra sutil para dar profundidad
-    shadowColor: "#0F172A",
+    shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.03,
     shadowRadius: 4,
     elevation: 2,
-  },
-  searchSectionFocused: {
-    borderColor: "#0D9488",
-    borderWidth: 1.5,
-    shadowOpacity: 0.08,
-    shadowRadius: 8,
   },
   searchIcon: {
     marginRight: 10,
@@ -108,7 +109,6 @@ const styles = StyleSheet.create({
   input: {
     flex: 1,
     fontSize: 15,
-    color: "#0F172A",
     height: "100%",
     fontWeight: "500",
   },
@@ -117,14 +117,12 @@ const styles = StyleSheet.create({
   },
   totalContainer: {
     marginTop: 16,
-    backgroundColor: "#F1F5F9",
     borderRadius: 12,
     padding: 12,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
     borderWidth: 1,
-    borderColor: "#E2E8F0",
   },
   totalInfo: {
     flexDirection: "row",
@@ -134,27 +132,20 @@ const styles = StyleSheet.create({
     width: 28,
     height: 28,
     borderRadius: 6,
-    backgroundColor: "#FFFFFF",
     justifyContent: "center",
     alignItems: "center",
     marginRight: 8,
     borderWidth: 1,
-    borderColor: "#E2E8F0",
   },
   totalLabel: {
     fontSize: 12,
     fontWeight: "600",
-    color: "#64748B",
     textTransform: "uppercase",
     letterSpacing: 0.5,
   },
   totalValue: {
     fontSize: 18,
     fontWeight: "800",
-    color: "#0D9488",
     letterSpacing: -0.5,
-  },
-  totalValueNegative: {
-    color: "#E11D48",
   },
 });

@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "movil_prieto",
-    "slug": "movil_prieto",
+    "name": "Prieto Lab",
+    "slug": "PrietoLab",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "movilprieto",
+    "scheme": "PrietoLab",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
