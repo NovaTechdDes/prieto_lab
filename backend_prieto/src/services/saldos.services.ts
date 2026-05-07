@@ -7,6 +7,8 @@ export async function obtenerSaldos(nombre?: string) {
       request.input("nombre", nombre);
     }
 
+    console.log(nombre);
+
     const result = await request.query(
       `select odontologos.id_odontologo, odontologos.nom_odontologo, cta_cte.paciente, sum(cta_cte.debe - cta_cte.haber) as saldo
         from odontologos 

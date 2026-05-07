@@ -2,7 +2,9 @@ import { Request, Response } from "express";
 import { obtenerSaldos } from "../services/saldos.services";
 
 export const getSaldos = async (req: Request, res: Response) => {
-  const result = await obtenerSaldos();
+  const nombre = req.query.texto as string;
+
+  const result = await obtenerSaldos(nombre);
 
   if (!result) {
     return res.status(404).json({
